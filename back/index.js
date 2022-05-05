@@ -8,9 +8,10 @@ const cors = require('cors')
 // const passport = require('passport')
 // const LocalStrategy = require('passport-local')
 
-
+app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(cors())
+
 app.listen(port,()=> {
     console.log('App in istening on :', port )
 })
@@ -34,13 +35,13 @@ const SignupModel = mongoose.model("sign",signupSchema)
 app.post('/signup',async(req,res,next) => {
     const body = req.body;
     console.log(body)
-    const newSign = new  SignupModel(body)
+    const newSign = new SignupModel(body)
     try {
         const sign = await newSign.save()
         res.json(sign)
     }catch(err) {
         console.log(err)
-        res;status(500).send("internal sever error")
+        res.status(500).send("internal sever error")
     }
 })
 // passport.use(new LocalStrategy(async(username,password,done) => {
